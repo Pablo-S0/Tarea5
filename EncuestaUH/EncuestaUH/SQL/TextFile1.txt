@@ -1,0 +1,44 @@
+﻿--create database EncuestasUH
+
+use EncuestasUH
+
+Create table Persona 
+(
+	cedulaP varchar(15) primary Key, 
+	nombre varchar(50) not null,
+	genero char(1) constraint chck_genero check (genero = 'F' or genero = 'm'),
+	Fecha date constraint Def_fecha default getdate()
+
+)
+
+
+
+insert into persona values ('1','rosario','F', null)
+insert into persona(cedulaP, nombre, genero) values ('2','Michael','M')
+select* from persona
+
+delete persona where cedulaP = '12'
+
+create table Respuestas
+(
+	id int identity (1,1),
+	cedulaR varchar (15), 
+	r1 char(1),
+	r2 char(2),
+	r3 char(3),
+
+
+	constraint PK_id primary key (id),
+	constraint FK_cedula Foreign key (cedulaR) references Persona (cedulaP)
+
+)
+
+insert into Persona values ('1','Nazareth Carmona', 'F', GETDATE())
+
+insert into Respuestas values ('1','b','c','a')
+
+select*from respuestas 
+
+--inner join 
+
+select Respuestas.id, Persona.nombre, Respuestas.cedulaR, respuestas.r1,respuestas.r2,respuestas.r3 from Respuestas inner join Persona on Respuestas.cedulaR = Persona.cedulaP
